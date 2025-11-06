@@ -1,0 +1,45 @@
+[package]
+name = "aido"
+version = "0.1.0"
+edition = "2021"
+authors = ["AI-DO Contributors"]
+description = "AI-powered command generation and execution for your terminal"
+license = "MIT"
+
+[dependencies]
+# CLI & Args
+clap = { version = "4", features = ["derive"] }
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# HTTP client for AI API
+reqwest = { version = "0.11", features = ["json", "rustls-tls"], default-features = false }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Terminal UI
+crossterm = "0.27"
+dialoguer = "0.11"
+console = "0.15"
+colored = "2"
+
+# Configuration
+config = "0.14"
+toml = "0.8"
+dirs = "5"
+
+# Shell execution
+shell-words = "1"
+
+# Error handling
+anyhow = "1"
+thiserror = "1"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Regex for command validation
+regex = "1"
+lazy_static = "1.4"
