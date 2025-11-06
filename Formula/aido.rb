@@ -9,7 +9,9 @@ class Aido < Formula
   depends_on "rust" => :build
 
   def install
-    system "cargo", "install", *std_cargo_args
+    cd "aido" do
+      system "cargo", "install", *std_cargo_args
+    end
   end
 
   test do
