@@ -6,6 +6,16 @@ authors = ["AI-DO Contributors"]
 description = "AI-powered command generation and execution for your terminal"
 license = "MIT"
 
+# Main binary (for release builds)
+[[bin]]
+name = "aido"
+path = "src/main.rs"
+
+# Debug binary (for development/testing without conflicts)
+[[bin]]
+name = "aido-debug"
+path = "src/main.rs"
+
 [dependencies]
 # CLI & Args
 clap = { version = "4", features = ["derive"] }

@@ -22,28 +22,19 @@ brew install arvin-shafiei/cli-question/aido
 
 This installs the `aido` binary into Homebrew's prefix and keeps it up to date with `brew upgrade`.
 
-### Quick Install Script
-
-```bash
-cd /Users/arvin/Documents/cli-question
-./install.sh
-```
-
-The installation script will:
-1. Build the project in release mode
-2. Install the binary to `~/.local/bin/aido`
-3. Add `~/.local/bin` to your PATH in your shell config
-4. Initialize the configuration
-
 ### Manual Install
 
 ```bash
 # Build the project
 cd aido
-cargo build --release
+cargo build --release --bin aido
 
 # Copy to a location in your PATH
 cp target/release/aido ~/.local/bin/
+
+# Make sure ~/.local/bin is in your PATH
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc  # or ~/.bashrc
+source ~/.zshrc
 
 # Initialize configuration
 aido init
@@ -51,24 +42,7 @@ aido init
 
 ## Setup
 
-### 1. After Installation
-
-After running the install script, you need to reload your shell configuration:
-
-```bash
-# For Zsh
-source ~/.zshrc
-
-# For Bash
-source ~/.bashrc
-
-# For Fish
-source ~/.config/fish/config.fish
-
-# Or just restart your terminal
-```
-
-### 2. Set Up Keybindings (Optional but Recommended)
+### Set Up Keybindings (Optional but Recommended)
 
 Add keybindings to your shell so you can trigger AIDO with the defaults (Ctrl+O for ASK, Ctrl+K for DO) or your preferred shortcuts:
 
@@ -122,7 +96,7 @@ aido do "command" -v          # Verbose logging
 
 ### Keybinding Usage
 
-Once you've set up the shell integration (either via the install script or `aido setup-shell`):
+Once you've set up the shell integration with `aido setup-shell`:
 
 - **Ctrl+O**: Trigger ASK mode (ask questions)
 - **Ctrl+K**: Trigger DO mode (generate and execute commands)
@@ -284,19 +258,40 @@ aido ask "how to debug network issues on macOS?"
 ## Development
 
 ### Build from source
+
+**For development/testing (creates `aido-debug` binary):**
 ```bash
 cd aido
-cargo build --release
+cargo build --bin aido-debug
+./target/debug/aido-debug --version
 ```
+
+**For release (creates `aido` binary):**
+```bash
+cd aido
+cargo build --release --bin aido
+./target/release/aido --version
+```
+
+> **Note:** Using `aido-debug` for development prevents conflicts with your installed `aido` version, so you can test changes without affecting your production setup.
 
 ### Run tests
 ```bash
+cd aido
 cargo test
 ```
 
 ### Run with logging
 ```bash
-RUST_LOG=debug cargo run -- do "test command"
+cd aido
+RUST_LOG=debug cargo run --bin aido-debug -- do "test command"
+```
+
+### Quick testing
+```bash
+# Test the debug binary directly
+cd aido
+cargo build --bin aido-debug && ./target/debug/aido-debug do "list files"
 ```
 
 ## Requirements
