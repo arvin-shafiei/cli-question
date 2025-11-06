@@ -8,12 +8,21 @@ A Rust-based CLI tool that brings AI-powered command generation to your terminal
 - **ASK Mode**: Ask questions and get answers without execution
 - **Smart Confirmation**: Preview commands before execution with safety checks
 - **Multi-Command Support**: Handle complex multi-step operations
-- **Keybinding Support**: Trigger from your terminal with Ctrl+K
+- **Keybinding Support**: Trigger from your terminal with configurable shortcuts (default Ctrl+O / Ctrl+K)
 - **Uses Claude CLI**: Leverages `claude -p` non-interactive mode (no API key management needed!)
 
 ## Installation
 
-### Quick Install
+### Homebrew (Recommended)
+
+```bash
+brew tap arvin-shafiei/cli-question https://github.com/arvin-shafiei/cli-question
+brew install arvin-shafiei/cli-question/aido
+```
+
+This installs the `aido` binary into Homebrew's prefix and keeps it up to date with `brew upgrade`.
+
+### Quick Install Script
 
 ```bash
 cd /Users/arvin/Documents/cli-question
@@ -61,7 +70,7 @@ source ~/.config/fish/config.fish
 
 ### 2. Set Up Keybindings (Optional but Recommended)
 
-Add keybindings to your shell so you can trigger aido with Ctrl+K:
+Add keybindings to your shell so you can trigger AIDO with the defaults (Ctrl+O for ASK, Ctrl+K for DO) or your preferred shortcuts:
 
 **Option 1: One-time in current session**
 ```bash
@@ -113,14 +122,15 @@ aido do "command" -v          # Verbose logging
 
 ### Keybinding Usage
 
-Once you've set up the shell integration:
+Once you've set up the shell integration (either via the install script or `aido setup-shell`):
 
-- **Ctrl+O**: Trigger DO mode (generate and execute commands)
-- **Ctrl+P**: Trigger ASK mode (ask questions)
+- **Ctrl+O**: Trigger ASK mode (ask questions)
+- **Ctrl+K**: Trigger DO mode (generate and execute commands)
+- Run `aido` with no arguments to open the settings menu and customize the bindings or unsafe mode.
 
 Just press the key combination in your terminal, type your request, and press Enter!
 
-> **Note:** We use Ctrl+O and Ctrl+P to avoid conflicts with tmux and other terminal tools.
+> **Note:** Defaults are Ctrl+O (ASK) and Ctrl+K (DO), which avoid conflicts with common terminal bindings. You can change them from the interactive settings menu (`aido`).
 
 ## Configuration
 
@@ -148,11 +158,16 @@ always_confirm = true
 auto_explain = false
 dangerous_commands = ["rm", "mv", "dd", "mkfs"]
 dry_run = false
+unsafe_mode = false
 
 [ui]
 style = "terminal"
 color_scheme = "auto"
 show_context = true
+
+[keybindings]
+ask_binding = "ctrl-o"
+do_binding = "ctrl-k"
 ```
 
 ## Commands
